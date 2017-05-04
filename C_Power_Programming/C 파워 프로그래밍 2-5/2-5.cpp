@@ -1,7 +1,8 @@
 #include <stdio.h>
+#define PI 3.14
 
 int main(void) {
-	double f1, f2;
+	double f1, f2, rad;
 	fputs("두 개의 실수 입력 : ", stdout);
 	scanf("%lf %lf", &f1, &f2);
 	printf("덧셈 결과 : %f\n", f1 + f2);
@@ -9,6 +10,7 @@ int main(void) {
 	printf("곱셈 결과 : %f\n", f1 * f2);
 	printf("나눗셈 결과 : %f\n", f1 / f2);
 	fputs("반지름 입력 : ", stdout);
-	scanf("%lf", &f1);
-	printf("원의 넓이 : %f", (f1*f1)*3.14);
+	scanf("%lf", &rad);
+	printf("원의 넓이 : %f", (rad*rad)*PI);
+	return 0;
 }
