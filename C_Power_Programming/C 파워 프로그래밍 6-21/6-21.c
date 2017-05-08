@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+// 주의해야할 문제
 int Dim1ArrSum(int*, int);
 int SumOfArrayBy2(int(*arrPtr)[2], int column);
 int SumOfArrayBy3(int(*aarrPtr)[3], int column);
