@@ -14,7 +14,7 @@ typedef struct __bookInfo {
 int numOfData = 0;
 bookInfo bookInfoList[BOOK_INFO_NUM];
 
-int InsertList(bookInfo* bookPtr);
+int InsertList(bookInfo bookPtr);
 
 int main(void) {
 	int i, num;
@@ -31,7 +31,7 @@ int main(void) {
 		scanf("%d", &(book.bookPrice));
 		getchar();
 
-		num = InsertList(&book);
+		num = InsertList(book);
 		if (num == -1)
 			printf("입력에 실패하였습니다. \n");
 		else
@@ -48,7 +48,7 @@ int main(void) {
 	}
 }
 
-int InsertList(bookInfo* bookPtr) {
+int InsertList(bookInfo bookPtr) {
 	int idx;
 	int inputIdx = numOfData;
 
@@ -56,7 +56,7 @@ int InsertList(bookInfo* bookPtr) {
 		return -1;
 
 	for (idx = 0; idx < numOfData; idx++) {
-		if (strcmp(bookInfoList[idx].bookTitle, bookPtr->bookTitle) > 0)
+		if (strcmp(bookInfoList[idx].bookTitle, bookPtr.bookTitle) > 0)
 		{
 			inputIdx = idx;
 			break;
@@ -66,7 +66,7 @@ int InsertList(bookInfo* bookPtr) {
 	for (idx = numOfData; idx > inputIdx; idx--)
 		bookInfoList[idx] = bookInfoList[idx - 1];
 
-	bookInfoList[inputIdx] = (*bookPtr);
+	bookInfoList[inputIdx] = bookPtr;
 
 	return ++numOfData;
 }
