@@ -67,3 +67,87 @@ void PrintAllString(FILE * fp) {
 		fputs(str, stdout);
 	}
 }
+
+/* 내 풀이
+
+#include <stdio.h>
+#define MAX_STR_LEN 100
+#define STR_NUM 5
+int main(void) {
+	FILE * fp = fopen("string.txt", "wt");
+	char input[MAX_STR_LEN];
+
+	for (int i = 0; i < STR_NUM; i++) {
+		printf("%d번째 문자열 입력 : ", i + 1);
+		fgets(input, MAX_STR_LEN, stdin);
+		fputs(input, fp);
+	}
+	puts("입력이 완료되었습니다.\n");
+	fclose(fp);
+
+	fp = fopen("string.txt", "rt");
+	int count;
+	fputs("출력할 문자열 정보 입력(6이상은 전체 출력) : ", stdout);
+	scanf("%d", &count);
+	if (count >= 1 && count <= 5) {
+		for (int i = 0; i < (count - 1); i++) {
+			fgets(input, MAX_STR_LEN, fp);
+		}
+		fgets(input, MAX_STR_LEN, fp);
+		puts(input);
+		puts("출력이 완료되었습니다.");
+	}
+	else if (count > 5) {
+		while(1){
+			fgets(input, MAX_STR_LEN, fp);
+			if (feof(fp)!=0) {
+				break;
+			}
+			puts(input);
+		}
+		puts("출력이 완료되었습니다.");
+	}
+	fclose(fp);
+	return 0;
+}#include <stdio.h>
+#define MAX_STR_LEN 100
+#define STR_NUM 5
+int main(void) {
+	FILE * fp = fopen("string.txt", "wt");
+	char input[MAX_STR_LEN];
+
+	for (int i = 0; i < STR_NUM; i++) {
+		printf("%d번째 문자열 입력 : ", i + 1);
+		fgets(input, MAX_STR_LEN, stdin);
+		fputs(input, fp);
+	}
+	puts("입력이 완료되었습니다.\n");
+	fclose(fp);
+
+	fp = fopen("string.txt", "rt");
+	int count;
+	fputs("출력할 문자열 정보 입력(6이상은 전체 출력) : ", stdout);
+	scanf("%d", &count);
+	if (count >= 1 && count <= 5) {
+		for (int i = 0; i < (count - 1); i++) {
+			fgets(input, MAX_STR_LEN, fp);
+		}
+		fgets(input, MAX_STR_LEN, fp);
+		puts(input);
+		puts("출력이 완료되었습니다.");
+	}
+	else if (count > 5) {
+		while(1){
+			fgets(input, MAX_STR_LEN, fp);
+			if (feof(fp)!=0) {
+				break;
+			}
+			puts(input);
+		}
+		puts("출력이 완료되었습니다.");
+	}
+	fclose(fp);
+	return 0;
+}
+
+*/
