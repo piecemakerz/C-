@@ -200,3 +200,132 @@ void ArrangeByPrice() {
 		}
 	return;
 }
+
+/*내 풀이
+#include <stdio.h>
+#include <string.h>
+#define BOOK_INFO_NUM 3
+#define STR_LEN 50
+typedef struct __bookInfo {
+	char bookTitle[STR_LEN];
+	char bookPub[STR_LEN];
+	int bookPrice;
+} bookInfo;
+
+bookInfo books[BOOK_INFO_NUM] = { 0, };
+bookInfo *bookInfoPtr[BOOK_INFO_NUM] = { 0, };
+
+void InsertBooks(bookInfo input);
+void SortByTitle();
+void SortByPub();
+void SortByPrice();
+
+int main(void) {
+	bookInfo save;
+	int choice;
+	puts("******도서 정보 입력******");
+	for (int i = 0; i < BOOK_INFO_NUM; i++) {
+		printf("%d번째 도서 정보 입력.\n", i + 1);
+		fputs("도서 제목 : ", stdout);
+		gets(save.bookTitle);
+		fputs("출판사 명 : ", stdout);
+		gets(save.bookPub);
+		fputs("도서 가격 : ", stdout);
+		scanf("%d", &(save.bookPrice));
+		getchar();
+		InsertBooks(save);
+
+		printf("%d번째 입력 완료......\n", i + 1);
+		puts("");
+	}
+	for (int i = 0; i < BOOK_INFO_NUM; i++)
+		bookInfoPtr[i] = &books[i];
+
+	while (1) {
+		puts("******도서 정보 출력******");
+		puts("정렬방식 선택......");
+		puts("1. 도서 선택 순, 2. 출판사 순, 3. 가격 순, 4. 종료");
+		fputs("그대의 선택은? ", stdout);
+		scanf("%d", &choice);
+
+		switch (choice) {
+		case 1:
+			SortByTitle();
+			break;
+		case 2:
+			SortByPub();
+			break;
+		case 3:
+			SortByPrice();
+			break;
+		case 4:
+			puts("프로그램을 종료합니다.");
+			return 0;
+		}
+
+		for (int i = 0; i < 3; i++) {
+			printf("%d번째 도서 정보 출력.\n", i + 1);
+			fputs("도서 제목 : ", stdout);
+			puts(bookInfoPtr[i]->bookTitle);
+			fputs("출판사 명 : ", stdout);
+			puts(bookInfoPtr[i]->bookPub);
+			fputs("도서 가격 : ", stdout);
+			printf("%d\n", bookInfoPtr[i]->bookPrice);
+			puts("");
+		}
+	}
+}
+
+void InsertBooks(bookInfo input) {
+	int num = 0;
+	while (1) {
+		if (books[num].bookTitle[0] == 0) {
+			books[num] = input;
+			break;
+		}
+		if (strcmp(books[num].bookTitle, input.bookTitle) > 0) {
+			for (int i = BOOK_INFO_NUM - 2; i >= num; i--) {
+				books[i + 1] = books[i];
+			}
+			books[num] = input;
+			break;
+		}
+		num++;
+	}
+	return;
+}
+
+void SortByTitle() {
+	for (int i = 0; i < BOOK_INFO_NUM; i++)
+		bookInfoPtr[i] = &books[i];
+	return;
+}
+
+void SortByPub() {
+	bookInfo * temp;
+
+	for(int i=0; i<BOOK_INFO_NUM-1; i++)
+		for (int j = 0; j < BOOK_INFO_NUM - 1 - i; j++) {
+			if (strcmp(bookInfoPtr[j]->bookPub, bookInfoPtr[j + 1]->bookPub) > 0) {
+				temp = bookInfoPtr[j];
+				bookInfoPtr[j] = bookInfoPtr[j + 1];
+				bookInfoPtr[j + 1] = temp;
+			}
+		}
+	return;
+}
+
+void SortByPrice() {
+	bookInfo * temp;
+
+	for (int i = 0; i<BOOK_INFO_NUM - 1; i++)
+		for (int j = 0; j < BOOK_INFO_NUM - 1 - i; j++) {
+			if (bookInfoPtr[j]->bookPrice > bookInfoPtr[j + 1]->bookPrice) {
+				temp = bookInfoPtr[j];
+				bookInfoPtr[j] = bookInfoPtr[j + 1];
+				bookInfoPtr[j + 1] = temp;
+			}
+		}
+	return;
+}
+*/
