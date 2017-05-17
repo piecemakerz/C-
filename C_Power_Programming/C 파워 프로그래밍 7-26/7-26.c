@@ -110,3 +110,62 @@ void SortString(char * strArr[STR_NUM]) {
 		}
 	}
 }
+
+/* 내 풀이
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define INIT_STR_LEN 5
+#define INC_STR_LEN 5
+void StrInput(char ** strptr, int num);
+
+int main(void) {
+	char * strptr[5];
+	for (int i = 0; i < 5; i++) {
+		printf("%d번째 문자열 입력 : ", i + 1);
+		StrInput(strptr, i); // 문자열 입력 및 정렬
+	}
+
+	for (int i = 0; i < 5; i++) {
+		puts(strptr[i]);
+		free(strptr[i]);
+	}
+
+	return 0;
+}
+
+void StrInput(char**strptr, int num) {
+	char * str = (char*)malloc(sizeof(char)*INIT_STR_LEN);
+	int count = 0;
+	int cur_size = INIT_STR_LEN;
+
+	while (1) {
+		str[count] = getchar();
+
+		if (str[count] == '\n') {
+			str[count] = 0;
+			for (int i = 0; i < num; i++) { // 문자열 정렬
+				if (strlen(strptr[i]) > strlen(str)) {
+					for (int j = num - 1; j >= i; j--) {
+						strptr[j + 1] = strptr[j];
+					}
+					strptr[i] = str;
+					return;
+				}
+			}
+			strptr[num] = str;
+			break;
+		}
+
+		else {
+			if ((count + 1) == cur_size) {
+				realloc(str, cur_size + (INC_STR_LEN * sizeof(char))); // 배열 크기 확장
+				cur_size += INC_STR_LEN;
+			}
+			count++;
+		}
+	}
+	return;
+}
+*/
