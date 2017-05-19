@@ -1,5 +1,5 @@
 /*
- * Name : phoneFunc.c ver 1.4
+ * Name : phoneFunc.c ver 1.5
  * Content : 전화번호 컨트롤 함수
  * Implementation : piecemakerz
  *
@@ -154,5 +154,38 @@ void DeletePhoneData(void) {
 	numOfData--;
 	puts("삭제가 완료되었습니다.");
 	getchar();
+	return;
+}
+
+void StoreDataToFile(void) {
+	FILE * fp = fopen("phoneData.txt", "wt");
+	for(int i=0; i<numOfData; i++){
+		fputs(phoneList[i]->name, fp);
+		fputc('\n', fp);
+		fputs(phoneList[i]->phoneNum, fp);
+		fputc('\n', fp);
+	}
+	fclose(fp);
+	return;
+}
+
+void LoadDataFromFile(void) {
+	FILE * fp = fopen("phoneData.txt", "rt");
+	if (fp == NULL)
+		return;
+
+	while (1) {
+		phoneData * save = (phoneData*)malloc(sizeof(phoneData));
+		fgets(save->name, NAME_LEN, fp);
+		save->name[strlen(save->name)-1] = 0;
+		if (feof(fp)) {
+			free(save);
+			break;
+		}
+		fgets(save->phoneNum, PHONE_LEN, fp);
+		save->phoneNum[strlen(save->phoneNum)-1] = 0;
+		phoneList[numOfData++] = save;
+	}
+	fclose(fp);
 	return;
 }

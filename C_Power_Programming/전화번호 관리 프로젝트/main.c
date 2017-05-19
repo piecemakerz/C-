@@ -1,4 +1,4 @@
-/* Name : main.c ver 1.1
+/* Name : main.c ver 1.2
  * Content : main 함수
  * Implementation : piecemakerz
  *
@@ -16,6 +16,7 @@ enum { INPUT = 1, SHOWALL, SEARCH, DELETE, QUIT };
 */
 int main(void) {
 	int inputMenu = 0;
+	LoadDataFromFile();
 
 	while (1) {
 		ShowMenu();
@@ -39,6 +40,7 @@ int main(void) {
 		}
 
 		if (inputMenu == QUIT) {
+			StoreDataToFile();
 			puts("이용해 주셔서 고마워요~");
 			break;
 		}

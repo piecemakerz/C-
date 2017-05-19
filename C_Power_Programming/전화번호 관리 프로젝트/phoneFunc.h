@@ -1,5 +1,5 @@
 #pragma once
-/* Name : phoneFunc.h ver 1.1
+/* Name : phoneFunc.h ver 1.2
  * Content : 전화번호 컨트롤 함수들의 선언
  * Implementation : piecemakerz
  *
@@ -15,6 +15,7 @@ void InputPhoneData(void);
 void ShowAllData(void);
 void SearchPhoneData(void);
 void DeletePhoneData(void);
-
+void StoreDataToFile(void);
+void LoadDataFromFile(void);
 #endif
 /* end of file */
