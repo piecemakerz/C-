@@ -1,4 +1,3 @@
-#pragma once
 /* Name : phoneData.h ver 1.0
  * Content : 구조체 phoneData의 선언 및 정의
  * Implementation : piecemakerz

@@ -57,7 +57,7 @@ void InputPhoneData(void)
 
 	getchar();
 	puts("입력이 완료되었습니다.");
-
+	StoreDataToFileInStruct();
 	return;
 }
 
@@ -114,17 +114,8 @@ void DeletePhoneData(void) {
 	gets(name);
 
 	for (int i = 0; i < numOfData; i++) {
-		// if (!strcmp(phoneList[i].name, name))
 		if (!strcmp(phoneList[i]->name, name)) {
 			samenameidx[samecount++] = i;
-			/*free(phoneList[i]);
-			for (int j = numOfData-1; j > i; j--)
-				phoneList[j - 1] = phoneList[j];
-			numOfData--;
-			puts("삭제가 완료되었습니다.");
-			getchar();
-			return;
-			*/
 		}
 	}
 	if (!samecount) {
@@ -153,7 +144,17 @@ void DeletePhoneData(void) {
 
 	numOfData--;
 	puts("삭제가 완료되었습니다.");
+	StoreDataToFileInStruct();
 	getchar();
+	return;
+}
+
+void StoreDataToFileInStruct(void) {
+	FILE * fp = fopen("phoneData.dat", "wb");
+	for (int i = 0; i<numOfData; i++) {
+		fwrite(phoneList[i], sizeof(phoneData), 1, fp);
+	}
+	fclose(fp);
 	return;
 }
 
@@ -169,6 +170,7 @@ void StoreDataToFile(void) {
 	return;
 }
 
+
 void LoadDataFromFile(void) {
 	FILE * fp = fopen("phoneData.txt", "rt");
 	if (fp == NULL)
@@ -177,14 +179,35 @@ void LoadDataFromFile(void) {
 	while (1) {
 		phoneData * save = (phoneData*)malloc(sizeof(phoneData));
 		fgets(save->name, NAME_LEN, fp);
-		save->name[strlen(save->name)-1] = 0;
+		save->name[strlen(save->name) - 1] = 0;
 		if (feof(fp)) {
 			free(save);
 			break;
 		}
 		fgets(save->phoneNum, PHONE_LEN, fp);
-		save->phoneNum[strlen(save->phoneNum)-1] = 0;
+		save->phoneNum[strlen(save->phoneNum) - 1] = 0;
 		phoneList[numOfData++] = save;
+	}
+	fclose(fp);
+	return;
+}
+
+void LoadDataFromFileInStruct(void) {
+	int count;
+	FILE * fp = fopen("phoneData.dat", "rb");
+	if (fp == NULL)
+		return;
+	phoneData * save;
+
+	while (1) {
+		save = (phoneData*)malloc(sizeof(phoneData));
+		count = fread(save, sizeof(phoneData), 1, fp);
+		if (count < sizeof(phoneData)) {
+			if (feof(fp))
+				puts("오류가 발생했습니다.");
+			free(save);
+			break;
+		}
 	}
 	fclose(fp);
 	return;
@@ -231,5 +254,7 @@ void ChangePhoneData(void) {
 	strcpy(phoneList[samenameidx[choice - 1]]->phoneNum, phoneNum);
 	puts("변경이 완료되었습니다.");
 	getchar();
+	//StoreDataToFile();
+	StoreDataToFileInStruct();
 	return;
 }

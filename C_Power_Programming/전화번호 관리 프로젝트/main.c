@@ -16,7 +16,7 @@ enum { INPUT = 1, SHOWALL, SEARCH, DELETE, CHANGE, QUIT };
 */
 int main(void) {
 	int inputMenu = 0;
-	LoadDataFromFile();
+	LoadDataFromFileInStruct();
 
 	while (1) {
 		ShowMenu();
@@ -43,7 +43,7 @@ int main(void) {
 		}
 
 		if (inputMenu == QUIT) {
-			StoreDataToFile();
+			StoreDataToFileInStruct();
 			puts("이용해 주셔서 고마워요~");
 			break;
 		}
