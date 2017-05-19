@@ -1,4 +1,4 @@
-/* Name : screenOut.c ver 1.2
+/* Name : screenOut.c ver 1.3
  * Content : 콘솔 출력을 위한 함수 정의
  * Implementation : piecemakerz
  *
@@ -22,7 +22,8 @@ void ShowMenu(void) {
 	printf(" 2. 전체 정보 출력 \n");
 	printf(" 3. 전화번호 검색\n");
 	printf(" 4. 전화번호 삭제\n");
-	printf(" 5. 종료\n");
+	printf(" 5. 전화번호 변경\n");
+	printf(" 6. 종료\n");
 	printf("--------------------\n");
 	printf("선택>>");
 }

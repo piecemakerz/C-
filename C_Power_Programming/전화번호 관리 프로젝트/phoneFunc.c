@@ -1,5 +1,5 @@
 /*
- * Name : phoneFunc.c ver 1.5
+ * Name : phoneFunc.c ver 1.6
  * Content : 전화번호 컨트롤 함수
  * Implementation : piecemakerz
  *
@@ -187,5 +187,49 @@ void LoadDataFromFile(void) {
 		phoneList[numOfData++] = save;
 	}
 	fclose(fp);
+	return;
+}
+
+void ChangePhoneData(void) {
+	char name[NAME_LEN];
+	char phoneNum[PHONE_LEN];
+	int samenameidx[LIST_NUM];
+	int samecount = 0;
+	int choice;
+	fputs("변경 대상의 이름은? ", stdout);
+	gets(name);
+
+	for (int i = 0; i < numOfData; i++) {
+		if (!strcmp(phoneList[i]->name, name)) {
+			samenameidx[samecount++] = i;
+		}
+	}
+
+	if (!samecount) {
+		puts("찾는 이름의 데이터가 존재하지 않습니다.");
+		getchar();
+		return;
+	}
+
+	else if (samecount == 1) {
+		choice = 1;
+	}
+	else {
+		for (int i = 0; i < samecount; i++) {
+			printf("NUM. %d\n", i + 1);
+			ShowPhoneInfoByPtr(phoneList[samenameidx[i]]);
+			puts("");
+		}
+
+		fputs("선턕 : ", stdout);
+		scanf("%d", &choice);
+		getchar();
+	}
+	fputs("변경할 전화번호는? ", stdout);
+	gets(phoneNum);
+
+	strcpy(phoneList[samenameidx[choice - 1]]->phoneNum, phoneNum);
+	puts("변경이 완료되었습니다.");
+	getchar();
 	return;
 }
