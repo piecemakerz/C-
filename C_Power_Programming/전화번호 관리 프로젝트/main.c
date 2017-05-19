@@ -1,15 +1,15 @@
-/* Name : main.c ver 1.0
+/* Name : main.c ver 1.1
  * Content : main 함수
  * Implementation : piecemakerz
  *
- * Last modified 2017.05.18
+ * Last modified 2017.05.19
 */
 
 #include "common.h"
 #include "ScreenOut.h"
 #include "phoneFunc.h"
 
-enum { INPUT = 1, SHOWALL, QUIT };
+enum { INPUT = 1, SHOWALL, SEARCH, DELETE, QUIT };
 /* 함수 : int main (void)
  * 기능 : 사용자 선택 처리
  * 반환 : 정상 종료 시 0
@@ -29,6 +29,12 @@ int main(void) {
 			break;
 		case SHOWALL:
 			ShowAllData();
+			break;
+		case SEARCH:
+			SearchPhoneData();
+			break;
+		case DELETE:
+			DeletePhoneData();
 			break;
 		}
 

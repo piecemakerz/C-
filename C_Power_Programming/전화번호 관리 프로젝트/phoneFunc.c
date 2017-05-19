@@ -1,9 +1,9 @@
 /*
- * Name : phoneFunc.c ver 1.1
+ * Name : phoneFunc.c ver 1.2
  * Content : 전화번호 컨트롤 함수
  * Implementation : piecemakerz
  *
- * Last modified 2017.05.18
+ * Last modified 2017.05.19
  */
 
 #include "common.h"
@@ -53,6 +53,43 @@ void ShowAllData(void) {
 		ShowPhoneInfo(phoneList[i]);
 	}
 	puts("출력이 완료되었습니다.");
+	getchar();
+	return;
+}
+
+void SearchPhoneData(void) {
+	char name[NAME_LEN];
+
+	fputs("찾는 이름은? ", stdout);
+	gets(name);
+
+	for (int i = 0; i < numOfData; i++) {
+		if (!strcmp(phoneList[i].name, name)) {
+			ShowPhoneInfo(phoneList[i]);
+			break;
+		}
+	}
+
+	puts("검색이 완료되었습니다.");
+	getchar();
+	return;
+}
+
+void DeletePhoneData(void) {
+	char name[NAME_LEN];
+
+	fputs("찾는 이름은? ", stdout);
+	gets(name);
+
+	for (int i = 0; i < numOfData; i++) {
+		if (!strcmp(phoneList[i].name, name)) {
+			for (int j = numOfData; j > i; j--)
+				phoneList[j - 1] = phoneList[j];
+		}
+	}
+
+	numOfData--;
+	puts("삭제가 완료되었습니다.");
 	getchar();
 	return;
 }
