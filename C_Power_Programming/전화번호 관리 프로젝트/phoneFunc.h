@@ -3,7 +3,7 @@
  * Content : 전화번호 컨트롤 함수들의 선언
  * Implementation : piecemakerz
  *
- * Last modfied 2017.05.19
+ * Last modified 2017.05.19
  */
 
 #ifndef __PHONEFUNC_H__

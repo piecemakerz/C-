@@ -1,5 +1,5 @@
 /*
- * Name : phoneFunc.c ver 1.2
+ * Name : phoneFunc.c ver 1.3
  * Content : 전화번호 컨트롤 함수
  * Implementation : piecemakerz
  *
@@ -13,7 +13,9 @@
 #define LIST_NUM 100
 
 int numOfData = 0;
-phoneData phoneList[LIST_NUM];
+
+// phoneData phoneList[LIST_NUM];
+phoneData * phoneList[LIST_NUM];
 
 /* 함수 : void InputPhoneData(void)
  * 기능 : 전화번호 관련 데이터 입력 받아서 저장
@@ -23,16 +25,19 @@ phoneData phoneList[LIST_NUM];
 
 void InputPhoneData(void)
 {
-	phoneData data;
+	// phoneData data;
+	phoneData * data = (phoneData*)malloc(sizeof(phoneData));
 	if (numOfData >= LIST_NUM)
 	{
 		puts("메모리 공간이 부족합니다.");
 		return;
 	}
 	fputs("이름을 입력하세요 : ", stdout);
-	gets(data.name);
+	//gets(data.name);
+	gets(data->name);
 	fputs("전화번호를 입력하세요 : ", stdout);
-	gets(data.phoneNum);
+	//gets(data.phoneNum);
+	gets(data->phoneNum);
 
 	phoneList[numOfData++] = data;
 
@@ -50,7 +55,8 @@ void InputPhoneData(void)
 
 void ShowAllData(void) {
 	for (int i = 0; i < numOfData; i++) {
-		ShowPhoneInfo(phoneList[i]);
+		//ShowPhoneInfo(phoneList[i])
+		ShowPhoneInfoByPtr(phoneList[i]);
 	}
 	puts("출력이 완료되었습니다.");
 	getchar();
@@ -64,13 +70,17 @@ void SearchPhoneData(void) {
 	gets(name);
 
 	for (int i = 0; i < numOfData; i++) {
-		if (!strcmp(phoneList[i].name, name)) {
-			ShowPhoneInfo(phoneList[i]);
-			break;
+		//if(!strcmp(phoneList[i].name, name))
+		if (!strcmp(phoneList[i]->name, name)) {
+			//ShowPhoneInfo(phoneList[i]);
+			ShowPhoneInfoByPtr(phoneList[i]);
+			puts("검색이 완료되었습니다.");
+			getchar();
+			return;
 		}
 	}
-
-	puts("검색이 완료되었습니다.");
+	
+	puts("찾는 이름의 데이터가 존재하지 않습니다.");
 	getchar();
 	return;
 }
@@ -82,14 +92,19 @@ void DeletePhoneData(void) {
 	gets(name);
 
 	for (int i = 0; i < numOfData; i++) {
-		if (!strcmp(phoneList[i].name, name)) {
-			for (int j = numOfData; j > i; j--)
+		// if (!strcmp(phoneList[i].name, name))
+		if (!strcmp(phoneList[i]->name, name)) {
+			free(phoneList[i]);
+			for (int j = numOfData-1; j > i; j--)
 				phoneList[j - 1] = phoneList[j];
+			numOfData--;
+			puts("삭제가 완료되었습니다.");
+			getchar();
+			return;
 		}
 	}
 
-	numOfData--;
-	puts("삭제가 완료되었습니다.");
+	puts("찾는 이름의 데이터가 존재하지 않습니다.");
 	getchar();
 	return;
 }
