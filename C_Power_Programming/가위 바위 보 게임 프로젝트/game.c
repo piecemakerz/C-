@@ -8,6 +8,7 @@
 #include <time.h>
 #include "common.h"
 #include "game.h"
+#include "gameTimes.h"
 
 /* 함수 : int ChoiceOfCom(void)
  * 기능 : 무작위 값을 반환
@@ -28,7 +29,7 @@ int ChoiceOfCom(void) {
 
 int ChoiceOfMe(void) {
 	int choice;
-	fputs("가위(1) 바위(2) 보(3) 선택? ", stdout);
+	fputs("가위(1) 바위(2) 보(3) 종료(4) 선택? ", stdout);
 	scanf("%d", &choice);
 	return choice;
 }
@@ -56,6 +57,7 @@ void WhoIsWinner(int com, int you) {
 		return;
 	case 1: case -2:
 		puts("당신이 승자입니다.");
+		winplay++;
 		return;
 	}
 

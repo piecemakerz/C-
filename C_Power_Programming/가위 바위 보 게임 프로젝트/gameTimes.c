@@ -1,0 +1,6 @@
+#include "common.h"
+#include "gameTimes.h"
+
+int WinningRate(void) {
+	
+}
