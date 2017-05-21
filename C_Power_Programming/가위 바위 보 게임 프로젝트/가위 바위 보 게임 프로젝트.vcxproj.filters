@@ -27,6 +27,9 @@
     <ClInclude Include="gameMoney.h">
       <Filter>소스 파일\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="gameContinue.h">
+      <Filter>소스 파일\헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -39,6 +42,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="gameMoney.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="gameContinue.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

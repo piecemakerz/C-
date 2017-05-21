@@ -12,7 +12,10 @@ void IncreGameTimes(void);
 int GetGameTimes(void);
 void IncreYouWinTimes(void);
 int GetYouWinTimes(void);
-
+//void SetGameTimes(int num);
+//void SetYouWinTimes(int num);
+void StoreGameTimesToFile(FILE * fp);
+void LoadGameTimesFromFile(FILE * fp);
 int GetPercenOfVictory(void);
 
 //int WinningRate(void);

@@ -12,6 +12,34 @@ void SetGamerMoney(void) {
 	gamermoney = money;
 }
 
+/*void SetGamerContinueMoney(int money) {
+	gamermoney = money;
+	return;
+}
+
+void SetCompuContinueMoney(int money) {
+	compumoney = money;
+	return;
+}
+*/
+
+void StoreGameMoneyToFile(FILE * fp) {
+	fwrite(&compumoney, sizeof(int), 1, fp);
+	fwrite(&gamermoney, sizeof(int), 1, fp);
+}
+
+void LoadGameMoneyFromFile(FILE * fp) {
+	int readCnt1, readCnt2;
+
+	readCnt1 = fread(&compumoney, sizeof(int), 1, fp);
+	readCnt2 = fread(&gamermoney, sizeof(int), 1, fp);
+
+	if (readCnt1 != 1 || readCnt2 != 1) {
+		compumoney = 0;
+		gamermoney = 0;
+	}
+}
+
 void SetGamblingTableMoney(void) {
 	int money;
 	while (1) {

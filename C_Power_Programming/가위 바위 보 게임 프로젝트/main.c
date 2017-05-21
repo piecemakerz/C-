@@ -9,6 +9,7 @@
 #include "game.h"
 #include "gameTimes.h"
 #include "gameMoney.h"
+#include "gameContinue.h"
 
 int main(void) {
 	extern int totalplay;
@@ -16,10 +17,17 @@ int main(void) {
 	//char * comChoice;
 	int you;
 	//char * yourChoice;
-	puts("자! 게임을 시작합니다.");
-	puts("");
+	FILE * fp = fopen(FILE_NAME, "rb");
+	if (fp == NULL) {
+		puts("자! 게임을 시작합니다.");
+		puts("");
 
-	SetGamerMoney();
+		SetGamerMoney();
+	}
+	else {
+		StartContinue(fp);
+		fclose(fp);
+	}
 	printf("게이머 머니: %d\n", GetGamermoney());
 	printf("컴퓨터 머니: %d\n", GetCompumoney());
 
@@ -69,6 +77,10 @@ int main(void) {
 	}
 	puts("◇◇◇◇◇◇ 최종 결과 ◇◇◇◇◇◇");
 	printf("최종 승률: %d%%\n", GetPercenOfVictory());
+	if (!(GetCompumoney() <= 0 || GetGamermoney() <= 0))
+		SaveContinue();
+	else
+		ClearContinueInfo();
 	puts("이용해 주셔서 고마워요~");
 	return 0;
 }
