@@ -39,7 +39,7 @@ int main(void) {
 		*/
 		puts("");
 
-		totalplay++;
+		totalgame++;
 		puts("★★★★★★ 결과! ★★★★★★");
 		WhoIsWinner(com, you);
 
@@ -50,7 +50,8 @@ int main(void) {
 		printf(" ▷ 당신의 선택은 ");
 		ShowRSP(you);
 		puts("");
-
+		printf("승률: %d\%", WinningRate());
+		puts("");
 		puts("");
 	}
 	puts("이용해 주셔서 고마워요~");

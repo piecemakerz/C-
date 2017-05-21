@@ -57,7 +57,7 @@ void WhoIsWinner(int com, int you) {
 		return;
 	case 1: case -2:
 		puts("당신이 승자입니다.");
-		winplay++;
+		wingame++;
 		return;
 	}
 
