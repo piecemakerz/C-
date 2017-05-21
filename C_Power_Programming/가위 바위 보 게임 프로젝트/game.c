@@ -9,6 +9,7 @@
 #include "common.h"
 #include "game.h"
 #include "gameTimes.h"
+#include "gameMoney.h"
 
 /* 함수 : int ChoiceOfCom(void)
  * 기능 : 무작위 값을 반환
@@ -60,11 +61,13 @@ void WhoIsWinner(int com, int you) {
 	case 1: case -2:
 		puts("당신이 승자입니다.");
 		IncreYouWinTimes();
+		GamerWin();
 		//winplay++;
 		return;
 	}
 
 	puts("컴퓨터가 승자이군요!");
+	ComputerWin();
 }
 
 void ShowRSP(int rsp) {

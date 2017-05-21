@@ -8,6 +8,7 @@
 #include "common.h"
 #include "game.h"
 #include "gameTimes.h"
+#include "gameMoney.h"
 
 int main(void) {
 	extern int totalplay;
@@ -54,6 +55,12 @@ int main(void) {
 
 		printf("승률: %d%% \n", GetPercenOfVictory());
 		puts("");
+
+		printf("게이머 머니: %d\n", GetGamermoney());
+		printf("컴퓨터 머니: %d\n", GetCompumoney());
+		puts("");
+		if (GetCompumoney() <= 0 || GetGamermoney() <= 0)
+			break;
 	}
 	puts("◇◇◇◇◇◇ 최종 결과 ◇◇◇◇◇◇");
 	printf("최종 승률: %d%%\n", GetPercenOfVictory());
