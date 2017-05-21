@@ -1,4 +1,4 @@
-/* Name : game.c ver 2.0
+/* Name : game.c ver 2.1
  * Content : 게임 관련 함수 정의
  * Implementation : piecemakerz
  *
@@ -50,6 +50,8 @@ void WhoIsWinner(int com, int you) {
 	return;
 	*/
 	int outcome = you - com;
+	// extern int winplay;
+	IncreGameTimes();
 
 	switch (outcome) {
 	case 0:
@@ -57,7 +59,8 @@ void WhoIsWinner(int com, int you) {
 		return;
 	case 1: case -2:
 		puts("당신이 승자입니다.");
-		wingame++;
+		IncreYouWinTimes();
+		//winplay++;
 		return;
 	}
 

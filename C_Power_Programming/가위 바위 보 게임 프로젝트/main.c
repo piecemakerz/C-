@@ -1,4 +1,4 @@
-/* Name : main.c ver 2.0
+/* Name : main.c ver 2.1
  * Content : 게임 main 함수
  * Implementation : piecemakerz
  *
@@ -10,6 +10,7 @@
 #include "gameTimes.h"
 
 int main(void) {
+	extern int totalplay;
 	int com;
 	//char * comChoice;
 	int you;
@@ -39,7 +40,7 @@ int main(void) {
 		*/
 		puts("");
 
-		totalgame++;
+		totalplay++;
 		puts("★★★★★★ 결과! ★★★★★★");
 		WhoIsWinner(com, you);
 
@@ -50,10 +51,12 @@ int main(void) {
 		printf(" ▷ 당신의 선택은 ");
 		ShowRSP(you);
 		puts("");
-		printf("승률: %d\%", WinningRate());
-		puts("");
+
+		printf("승률: %d%% \n", GetPercenOfVictory());
 		puts("");
 	}
+	puts("◇◇◇◇◇◇ 최종 결과 ◇◇◇◇◇◇");
+	printf("최종 승률: %d%%\n", GetPercenOfVictory());
 	puts("이용해 주셔서 고마워요~");
 	return 0;
 }
