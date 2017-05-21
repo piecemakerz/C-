@@ -1,4 +1,4 @@
-/* Name : game.h ver 1.0
+/* Name : game.h ver 2.0
  * Content : 게임 관련 함수 선언
  * Implementation : piecemakerz
  *
@@ -8,12 +8,12 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
-enum { ODD = 1, EVEN };
+enum { SISSORS = 1, ROCK, PAPER };
 
 int ChoiceOfCom(void);
 int ChoiceOfMe(void);
 void WhoIsWinner(int com, int you);
-
+void ShowRSP(int rsp);
 #endif
 
 /* end of file */
