@@ -5,5 +5,7 @@ void ComputerWin(void);
 void GamerWin(void);
 int GetCompumoney(void);
 int GetGamermoney(void);
+void SetGamerMoney(void);
+void SetGamblingTableMoney(void);
 
 #endif

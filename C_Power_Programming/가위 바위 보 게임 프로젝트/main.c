@@ -1,4 +1,4 @@
-/* Name : main.c ver 2.1
+/* Name : main.c ver 2.3
  * Content : 게임 main 함수
  * Implementation : piecemakerz
  *
@@ -19,7 +19,12 @@ int main(void) {
 	puts("자! 게임을 시작합니다.");
 	puts("");
 
+	SetGamerMoney();
+	printf("게이머 머니: %d\n", GetGamermoney());
+	printf("컴퓨터 머니: %d\n", GetCompumoney());
+
 	while (1) {
+		SetGamblingTableMoney();
 		puts("☆☆☆☆☆☆ 대결! ☆☆☆☆☆☆");
 		com = ChoiceOfCom();
 		/*if (com == SISSORS)
