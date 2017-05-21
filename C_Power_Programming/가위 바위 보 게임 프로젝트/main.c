@@ -40,7 +40,7 @@ int main(void) {
 		*/
 		puts("");
 
-		totalplay++;
+		//totalplay++;
 		puts("¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú °á°ú! ¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú");
 		WhoIsWinner(com, you);
 
