@@ -20,7 +20,10 @@ void ShowMenu(void) {
 	printf("3. DVD 등록 \n");
 	printf("4. DVD 검색 \n");
 	printf("------------------- \n");
-	printf("5. 종료 \n");
+	printf("5. DVD 대여 \n");
+	printf("6. DVD 반납 \n");
+	printf("------------------- \n");
+	printf("7. DVD 대여 고객 전체 조회\n");
 	printf("------------------- \n");
 	printf("선택>> ");
 }

@@ -29,6 +29,9 @@ int AddDVDInfo(char * ISBN, char * title, int genre) {
 	strcpy(save->title, title);
 	save->genre = genre;
 
+	save->rentState = RETURNED; // 대여 상태 정보
+	save->numOfRentCus = 0; // 등록된 대여 정보의 개수
+	
 	dvdList[numOfDVD++] = save;
 	return numOfDVD;
 }

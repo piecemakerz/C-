@@ -10,7 +10,7 @@
 #include "screenOut.h"
 #include "dvdManager.h"
 
-enum { CUS_REGIST = 1, CUS_SEARCH, DVD_REGIST, DVD_SEARCH, QUIT };
+enum { CUS_REGIST = 1, CUS_SEARCH, DVD_REGIST, DVD_SEARCH, DVD_RENT, DVD_RETURN, DVD_INQUIRY, QUIT };
 
 int main(void)
 {
@@ -37,6 +37,19 @@ int main(void)
 		case DVD_SEARCH:
 			SearchDVDInfo();
 			break;
+
+		case DVD_RENT:
+			RentDVD();
+			break;
+
+		case DVD_RETURN:
+			ReturnDVD();
+			break;
+
+		case DVD_INQUIRY:
+			ReturnedDVDList();
+			break;
+
 		}
 
 		if (inputMenu == QUIT) {
