@@ -30,6 +30,15 @@
     <ClInclude Include="screenOut.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="dvdInfo.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dvdInfoAccess.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dvdManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cusInfoAccess.c">
@@ -42,6 +51,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="main.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="dvdManager.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="dvdInfoAccess.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

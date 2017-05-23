@@ -21,20 +21,19 @@ void RegistCustomer(void) {
 	char name[NAME_LEN];
 	char phone[PHONE_LEN];
 
-	while (1) {
-		fputs("ID 입력 : ", stdout);
-		scanf("%s", ID);
-		if (IsRegistID(ID)) {
-			puts("해당 ID는 사용 중에 있습니다. 다른 ID를 선택해주세요.");
-		}
-		else
-			break;
+	fputs("ID 입력 : ", stdout);
+	gets(ID);
+
+	if (IsRegistID(ID)) {
+		puts("해당 ID는 사용 중에 있습니다. 다른 ID를 선택해주세요.");
+		getchar();
+		return;
 	}
+
 	fputs("이름 입력 : ", stdout);
-	scanf("%s", name);
+	gets(name);
 	fputs("전화번호 입력 : ", stdout);
-	scanf("%s", phone);
-	getchar();
+	gets(phone);
 
 	if (!AddCusInfo(ID, name, phone)) {
 		puts("계정 등록에 실패했습니다.");
@@ -57,8 +56,7 @@ void SearchCusInfo(void) {
 	cusInfo * save;
 
 	fputs("찾는 ID 입력 : ", stdout);
-	scanf("%s", searchID);
-	getchar();
+	gets(searchID);
 	save = GetCusPtrByID(searchID);
 	if (save == NULL)
 		puts("등록된 회원이 없습니다.");

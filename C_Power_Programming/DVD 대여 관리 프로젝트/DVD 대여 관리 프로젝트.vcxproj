@@ -143,11 +143,16 @@
     <ClInclude Include="cusInfo.h" />
     <ClInclude Include="cusInfoAccess.h" />
     <ClInclude Include="cusManager.h" />
+    <ClInclude Include="dvdInfo.h" />
+    <ClInclude Include="dvdInfoAccess.h" />
+    <ClInclude Include="dvdManager.h" />
     <ClInclude Include="screenOut.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cusInfoAccess.c" />
     <ClCompile Include="cusManager.c" />
+    <ClCompile Include="dvdInfoAccess.c" />
+    <ClCompile Include="dvdManager.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="screenOut.c" />
   </ItemGroup>
