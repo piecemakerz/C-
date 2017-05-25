@@ -20,8 +20,18 @@ static int numOfCustomer = 0;
 */
 
 int AddCusInfo(char * ID, char * name, char * num) {
+	FILE * fp;
 	if (numOfCustomer >= MAX_CUSTOMER)
 		return 0;
+
+	numOfCustomer++;
+
+	if(numOfCustomer == 1)
+		fp = fopen("cusInfo.txt", "wt");
+	else
+		fp = fopen("cusInfo.txt", "at");
+	fprintf(fp, "numOfCustomer : %d\n", numOfCustomer);
+	fseek(fp, 0, SEEK_END);
 
 	cusInfo * save = (cusInfo *)malloc(sizeof(cusInfo));
 
@@ -29,7 +39,9 @@ int AddCusInfo(char * ID, char * name, char * num) {
 	strcpy(save->name, name);
 	strcpy(save->phoneNum, num);
 
-	cusList[numOfCustomer++] = save;
+	cusList[numOfCustomer-1] = save;
+	fprintf(fp, "ID : %s, name : %s, phoneNum : %s\n", ID, name, num);
+	fclose(fp);
 	return numOfCustomer;
 }
 
@@ -68,4 +80,27 @@ int IsRegistID(char * ID) {
 		return 1;
 }
 
+void LoadCusInfo() {
+	FILE * fp = fopen("cusInfo.txt", "rt");
+	char ID[ID_LEN];
+	char name[NAME_LEN];
+	char num[PHONE_LEN];
+
+	if (fp == NULL)
+		return;
+
+	fscanf(fp, "numOfCustomer : %d\n", &numOfCustomer);
+	for(int i=0; i<numOfCustomer; i++){
+		cusInfo * save = (cusInfo *)malloc(sizeof(cusInfo));
+		fscanf(fp, "ID : %s, name : %s, phoneNum : %s\n", ID, name, num);
+		if (!feof(fp))
+			break;
+		strcpy(save->ID, ID);
+		strcpy(save->name, name);
+		strcpy(save->phoneNum, num);
+		cusList[i] = save;
+	}
+	fclose(fp);
+	return;
+}
 /* end of file */

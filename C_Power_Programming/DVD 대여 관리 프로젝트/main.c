@@ -6,14 +6,20 @@
  */
 
 #include "common.h"
-#include "cusManager.h"
+#include "blManager.h"
 #include "screenOut.h"
-#include "dvdManager.h"
+#include "rentInfoAccess.h"
+#include "cusInfoAccess.h"
+#include "dvdInfoAccess.h"
 
 enum { CUS_REGIST = 1, CUS_SEARCH, DVD_REGIST, DVD_SEARCH, DVD_RENT, DVD_RETURN, DVD_INQUIRY, CUS_DVD_INQUIRY, QUIT };
 
 int main(void)
 {
+	LoadCusInfo();
+	LoadDVDInfo();
+	LoadRentList();
+
 	int inputMenu = 0;
 
 	while (1) {

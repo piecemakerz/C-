@@ -11,5 +11,7 @@ int SetDVDRented(char * ISBN);
 int SetDVDReturned(char * ISBN);
 int GetDVDRentState(char * ISBN);
 
+void LoadDVDInfo(void);
+void ChangeDVDInfo(dvdInfo * pDVD);
 #endif
 /* end of file */

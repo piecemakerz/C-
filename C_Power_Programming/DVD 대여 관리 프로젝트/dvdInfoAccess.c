@@ -22,18 +22,30 @@ static int numOfDVD = 0;
 */
 
 int AddDVDInfo(char * ISBN, char * title, int genre) {
+	FILE * fp;
 	if (numOfDVD >= MAX_DVD)
 		return 0;
+
+	numOfDVD++;
+
+	if (numOfDVD == 1)
+		fp = fopen("dvdInfo.txt", "wt");
+	else 
+		fp = fopen("dvdInfo.txt", "at");
+
+	fprintf(fp, "numOfDVD : %d\n", numOfDVD);
+	fseek(fp, 0, SEEK_END);
 
 	dvdInfo * save = (dvdInfo *)malloc(sizeof(dvdInfo));
 
 	strcpy(save->ISBN, ISBN);
 	strcpy(save->title, title);
 	save->genre = genre;
-
 	save->rentState = RETURNED; // 대여 상태 정보
 	
-	dvdList[numOfDVD++] = save;
+	fprintf(fp, "ISBN : %s, title : %s, genre : %d, rentState : %d\n", ISBN, title, genre, RETURNED);
+	dvdList[numOfDVD-1] = save;
+	fclose(fp);
 	return numOfDVD;
 }
 
@@ -77,6 +89,7 @@ int SetDVDRented(char * ISBN){
 		return 0;
 
 	pDVD->rentState = RENTED;
+	ChangeDVDInfo(pDVD);
 	return 1;
 }
 
@@ -92,6 +105,7 @@ int SetDVDReturned(char * ISBN) {
 		return 0;
 
 	pDVD->rentState = RETURNED;
+	ChangeDVDInfo(pDVD);
 	return 1;
 }
 
@@ -108,4 +122,62 @@ int GetDVDRentState(char * ISBN) {
 	return pDVD->rentState;
 }
 
+void LoadDVDInfo() {
+	char ISBN[ISBN_LEN];
+	char title[TITLE_LEN];
+	int genre;
+	int rentState;
+
+	FILE * fp = fopen("dvdInfo.txt", "rt");
+	if (fp == NULL)
+		return;
+
+	fscanf(fp, "numOfDVD : %d\n", &numOfDVD);
+	for (int i = 0; i < numOfDVD; i++) {
+		dvdInfo * save = (dvdInfo *)malloc(sizeof(dvdInfo));
+		fscanf(fp, "ISBN : %s, title : %s, genre : %d, rentState : %d\n", ISBN, title, &genre, &rentState);
+		if (!feof(fp))
+			break;
+		strcpy(save->ISBN, ISBN);
+		strcpy(save->title, title);
+		save->genre = genre;
+		save->rentState = rentState;
+		dvdList[i] = save;
+	}
+	fclose(fp);
+	return numOfDVD;
+}
+
+void ChangeDVDInfo(dvdInfo * pDVD) {
+	char ISBN[ISBN_LEN];
+	char title[TITLE_LEN];
+	int genre;
+	int rentState;
+
+	int pos;
+	FILE * fp = fopen("dvdInfo.txt", "rt");
+	if (fp == NULL)
+		return;
+
+	fscanf(fp, "numOfDVD : %d\n", &numOfDVD);
+	pos = ftell(fp);
+
+	for (int i = 0; i < numOfDVD; i++) {
+		fscanf(fp, "ISBN : %s, title : %s, genre : %d, rentState : %d\n", ISBN, title, &genre, &rentState);
+		if (!feof(fp))
+			break;
+
+		if (!strcmp(pDVD->ISBN, ISBN)) {
+			fclose(fp);
+			fp = fopen("dvdInfo.txt", "at");
+			fseek(fp, pos, SEEK_SET);
+			fprintf(fp, "ISBN : %s, title : %s, genre : %d, rentState : %d\n", pDVD->ISBN, pDVD->title, pDVD->genre, pDVD->rentState);
+			break;
+		}
+
+		pos = ftell(fp);
+	}
+	fclose(fp);
+	return;
+}
 /* end of file */
