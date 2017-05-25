@@ -7,6 +7,8 @@
 
 #include "common.h"
 #include "dvdInfo.h"
+#include "rentInfoAccess.h"
+#include "dvdInfoAccess.h"
 
 #define MAX_DVD 100
 
@@ -30,7 +32,6 @@ int AddDVDInfo(char * ISBN, char * title, int genre) {
 	save->genre = genre;
 
 	save->rentState = RETURNED; // 대여 상태 정보
-	save->numOfRentCus = 0; // 등록된 대여 정보의 개수
 	
 	dvdList[numOfDVD++] = save;
 	return numOfDVD;
@@ -70,18 +71,12 @@ int IsRegistISBN(char * ISBN) {
  * 반환 : 성공 1, 실패 0
  */
 
-int SetDVDRented(char * ISBN, char * cusID, int rentDay) {
-	int rentCusNum;
+int SetDVDRented(char * ISBN){
 	dvdInfo * pDVD = GetDVDPtrByISBN(ISBN);
 	if (pDVD == 0)
 		return 0;
 
-	rentCusNum = pDVD->numOfRentCus;
-
 	pDVD->rentState = RENTED;
-	strcpy(pDVD->rentList[rentCusNum].cusID, cusID);
-	pDVD->rentList[rentCusNum].rentDay = rentDay;
-	pDVD->numOfRentCus++;
 	return 1;
 }
 

@@ -146,6 +146,8 @@
     <ClInclude Include="dvdInfo.h" />
     <ClInclude Include="dvdInfoAccess.h" />
     <ClInclude Include="dvdManager.h" />
+    <ClInclude Include="rentInfo.h" />
+    <ClInclude Include="rentInfoAccess.h" />
     <ClInclude Include="screenOut.h" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +156,7 @@
     <ClCompile Include="dvdInfoAccess.c" />
     <ClCompile Include="dvdManager.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="rentInfoAccess.c" />
     <ClCompile Include="screenOut.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

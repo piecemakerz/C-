@@ -8,6 +8,8 @@
 #include "common.h"
 #include "cusInfo.h"
 #include "dvdInfo.h"
+#include "rentInfo.h"
+#include "screenOut.h"
 
 /* 프로그램 사용을 위한 메뉴 */
 void ShowMenu(void) {
@@ -24,7 +26,9 @@ void ShowMenu(void) {
 	printf("6. DVD 반납 \n");
 	printf("------------------- \n");
 	printf("7. DVD 대여 고객 전체 조회\n");
-	printf("8. 종료 \n");
+	printf("8. 고객 대여 DVD 전체 조회\n");
+	printf("------------------- \n");
+	printf("9. 종료 \n");
 	printf("------------------- \n");
 	printf("선택>> ");
 }
@@ -57,6 +61,13 @@ void ShowDVDInfo(dvdInfo * pDVD) {
 		puts("로맨틱");
 		break;
 	}
+	printf("└------------------ \n");
+}
+
+void ShowCusRentDVDInfo(dvdRentInfo * pDVDRent) {
+	printf("┌----------------- \n");
+	printf("┃▶ ISBN : %s \n", pDVDRent->ISBN);
+	printf("┃▶ 대여일 : %d \n", pDVDRent->rentDay);
 	printf("└------------------ \n");
 }
 /* end of file */

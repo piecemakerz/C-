@@ -39,6 +39,12 @@
     <ClInclude Include="dvdManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="rentInfo.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rentInfoAccess.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cusInfoAccess.c">
@@ -57,6 +63,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="dvdInfoAccess.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="rentInfoAccess.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

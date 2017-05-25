@@ -6,10 +6,10 @@
 
 #include "common.h"
 #include "dvdInfo.h"
-#include "DVDInfoAccess.h"
+#include "dvdInfoAccess.h"
 #include "screenOut.h"
 #include "cusInfoAccess.h"
-
+#include "rentInfoAccess.h"
 /* 함수 : void RegistDVD(void)
 * 기능 : DVD 등록
 * 반환 : void
@@ -139,7 +139,10 @@ void RentDVD(void) {
 
 	//save->numOfRentCus++;
 	//save->rentState = RENTED;
-	SetDVDRented(searchISBN, rentID, rentDay);
+	SetDVDRented(searchISBN);
+
+	AddRentList(searchISBN, rentID, rentDay);
+
 	puts("대여가 완료되었습니다.");
 	getchar();
 	return;
@@ -161,7 +164,7 @@ void ReturnDVD(void) {
 
 	//save = GetDVDPtrByISBN(returnISBN);
 
-	registDVD = IsRegistID(returnISBN);
+	registDVD = IsRegistISBN(returnISBN);
 
 	/*if (save == NULL) {
 		puts("등록되지 않는 ISBN 입니다.");
@@ -185,7 +188,7 @@ void ReturnDVD(void) {
 	}
 	*/
 
-	if (rentSte = RETURNED) {
+	if (rentSte == RETURNED) {
 		puts("대여되지 않은 DVD 입니다.");
 		getchar();
 		return;
@@ -218,11 +221,7 @@ void RentedDVDList(void) {
 		return;
 	}
 
-	for (int i = 0; i < save->numOfRentCus; i++) {
-		printf("대여일 : %d\n", save->rentList[i].rentDay);
-		ShowCustomerInfo(GetCusPtrByID(save->rentList[i].cusID));
-		puts("");
-	}
+	PrintOutRentAllCusInfo(ISBN);
 
 	puts("조회를 완료하였습니다.");
 	getchar();

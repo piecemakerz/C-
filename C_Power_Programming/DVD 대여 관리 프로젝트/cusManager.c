@@ -9,6 +9,7 @@
 #include "cusInfo.h"
 #include "cusInfoAccess.h"
 #include "screenOut.h"
+#include "rentInfoAccess.h"
 
 /* 함수 : void RegisterCustomer(void)
  * 기능 : 신규 회원 가입
@@ -68,3 +69,35 @@ void SearchCusInfo(void) {
 }
 
 /* end of file */
+
+void ShowAllCusRentedDVD(void) {
+	char ID[ID_LEN];
+	unsigned int start, end;
+	cusInfo * save;
+
+	fputs("찾는 ID 입력 : ", stdout);
+	gets(ID);
+
+	save = GetCusPtrByID(ID);
+	if (save == NULL) {
+		puts("가입된 회원이 없습니다.");
+		getchar();
+		return;
+	}
+
+	fputs("대여 기간 입력 : ", stdout);
+	scanf("%u %u", &start, &end);
+	getchar();
+
+	if (start > end) {
+		puts("기간 정보가 잘못 입력되었습니다.");
+		getchar();
+		return;
+	}
+
+	PrintOutCusAllRentInfo(ID, start, end);
+
+	puts("조회를 완료하였습니다.");
+	getchar();
+	return;
+}

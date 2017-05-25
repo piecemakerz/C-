@@ -17,19 +17,11 @@
 enum { ACTION = 1, COMIC, SF, ROMANTIC }; // 장르 정보
 enum { RENTED, RETURNED };
 
-typedef struct __dvdRentInfo {
-	char cusID[ID_LEN]; // 대여고객 ID
-	unsigned int rentDay; // 대여일
-}dvdRentInfo;
-
 typedef struct __dvdInfo {
 	char ISBN[ISBN_LEN];
 	char title[TITLE_LEN];
 	int genre;
-
 	int rentState; // 대여 상태 정보
-	int numOfRentCus; // 등록된 대여 정보의 개수
-	dvdRentInfo rentList[RENT_LEN]; // 대여 정보가 저장되는 배열
 }dvdInfo;
 
 #endif

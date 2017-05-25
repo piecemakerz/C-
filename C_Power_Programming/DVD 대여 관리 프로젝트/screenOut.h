@@ -10,10 +10,12 @@
 
 #include "cusInfo.h"
 #include "dvdInfo.h"
+#include "rentInfo.h"
 
 void ShowMenu(void);
 void ShowCustomerInfo(cusInfo * pCus);
 void ShowDVDInfo(dvdInfo * pDVD);
+void ShowCusRentDVDInfo(dvdRentInfo * pDVDRent);
 
 #endif
 /* end of file */
