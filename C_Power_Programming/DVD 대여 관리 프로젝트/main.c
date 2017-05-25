@@ -47,7 +47,7 @@ int main(void)
 			break;
 
 		case DVD_INQUIRY:
-			ReturnedDVDList();
+			RentedDVDList();
 			break;
 
 		}

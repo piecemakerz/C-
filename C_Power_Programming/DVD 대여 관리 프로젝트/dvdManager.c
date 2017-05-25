@@ -20,6 +20,7 @@ void RegistDVD(void) {
 	char ISBN[ISBN_LEN];
 	char title[TITLE_LEN];
 	int genre;
+
 	fputs("ISBN 입력 : ", stdout);
 	gets(ISBN);
 	if (IsRegistISBN(ISBN)) {
@@ -65,76 +66,151 @@ void SearchDVDInfo(void) {
 	return;
 }
 
+/* 함수 : void RentDVD(void)
+ * 기능 : 고객이 DVD를 대여하는 과정 처리
+ * 반환 : void
+ */
+
 void RentDVD(void) {
 	char searchISBN[ISBN_LEN];
-	char rentName[NAME_LEN];
-	dvdInfo * save;
+	char rentID[NAME_LEN];
+	int registDVD;
+	int registCus;
+	int rentSte;
+	unsigned int rentDay;
+
+	//dvdInfo * save;
 
 	fputs("대여 DVD ISBN 입력 : ", stdout);
 	gets(searchISBN);
-	save = GetDVDPtrByISBN(searchISBN);
-	if (save == NULL)
+
+	/*save = GetDVDPtrByISBN(searchISBN);
+	if (save == NULL) {
 		puts("등록된 DVD가 없습니다.");
-	else {
-		if (save->rentState == RENTED) {
-			puts("대여 중이라 대여가 불가능합니다.");
-			getchar();
-			return;
-		}
-
-		puts("대여가 가능합니다. 대여 과정을 진행합니다.");
-		fputs("대여 고객 ID 입력 : ", stdout);
-		gets(rentName);
-
-		if (GetCusPtrByID(rentName) == NULL) {
-			puts("가입 고객이 아닙니다.");
-			getchar();
-			return;
-		}
-
-		strcpy(save->rentList[save->numOfRentCus].cusID, rentName);
-		fputs("대여 날짜 입력 : ", stdout);
-		scanf("%d", &(save->rentList[save->numOfRentCus].rentDay));
 		getchar();
+		return;
 	}
-	save->numOfRentCus++;
-	save->rentState = RENTED;
+	*/
+
+	registDVD = IsRegistISBN(searchISBN);
+	if (registDVD == 0) {
+		puts("등록되지 않은 ISBN 입니다.");
+		getchar();
+		return;
+	}
+	
+	/*if (save->rentState == RENTED) {
+		puts("대여 중이라 대여가 불가능합니다.");
+		getchar();
+		return;
+	}
+	*/
+
+	rentSte = GetDVDRentState(searchISBN);
+	if (rentSte == RENTED) {
+		puts("대여 중이라 대여가 불가능합니다.");
+		getchar();
+		return;
+	}
+
+	puts("대여가 가능합니다. 대여 과정을 진행합니다.");
+	fputs("대여 고객 ID 입력 : ", stdout);
+	gets(rentID);
+
+	registCus = IsRegistID(rentID);
+
+	/*if (GetCusPtrByID(rentID) == NULL) {
+		puts("가입 고객이 아닙니다.");
+		getchar();
+		return;
+	}
+	*/
+
+	if (registCus == 0) {
+		puts("가입 고객이 아닙니다.");
+		getchar();
+		return;
+	}
+
+	//strcpy(save->rentList[save->numOfRentCus].cusID, rentID);
+	fputs("대여 날짜 입력 : ", stdout);
+	scanf("%u", &rentDay);
+	getchar();
+
+	//save->numOfRentCus++;
+	//save->rentState = RENTED;
+	SetDVDRented(searchISBN, rentID, rentDay);
 	puts("대여가 완료되었습니다.");
 	getchar();
 	return;
 }
 
+/* 함수 : void ReturnDVD(void)
+ * 기능 : 고객이 DVD를 반납하는 과정 처리
+ * 반환 : void
+ */
+
 void ReturnDVD(void) {
 	char returnISBN[ISBN_LEN];
-	dvdInfo * save;
+	int registDVD;
+	int rentSte;
+	//dvdInfo * save;
+
 	fputs("반납 DVD ISBN 입력 : ", stdout);
 	gets(returnISBN);
-	save = GetDVDPtrByISBN(returnISBN);
 
-	if (save == NULL) {
+	//save = GetDVDPtrByISBN(returnISBN);
+
+	registDVD = IsRegistID(returnISBN);
+
+	/*if (save == NULL) {
 		puts("등록되지 않는 ISBN 입니다.");
 		getchar();
 		return;
 	}
-	else if (save->rentState == RETURNED) {
+	*/
+
+	if (registDVD == 0) {
+		puts("등록되지 않는 ISBN 입니다.");
+		getchar();
+		return;
+	}
+
+	rentSte = GetDVDRentState(returnISBN);
+
+	/*else if (save->rentState == RETURNED) {
+		puts("대여되지 않은 DVD 입니다.");
+		getchar();
+		return;
+	}
+	*/
+
+	if (rentSte = RETURNED) {
 		puts("대여되지 않은 DVD 입니다.");
 		getchar();
 		return;
 	}
 
-	save->rentState = RETURNED;
+	//save->rentState = RETURNED;
+	SetDVDReturned(returnISBN);
 	puts("반납이 완료되었습니다.");
 	getchar();
 	return;
 
 }
 
-void ReturnedDVDList(void) {
+/* 함수 : void RentedDVDList(void)
+ * 기능 : 특정 DVD 대여자 전체정보 출력
+ * 반환 : void
+ */
+
+void RentedDVDList(void) {
 	char ISBN[ISBN_LEN];
 	dvdInfo * save;
 
 	fputs("찾는 ISBN 입력 : ", stdout);
 	gets(ISBN);
+
 	save = GetDVDPtrByISBN(ISBN);
 	if (save == NULL) {
 		puts("등록되지 않는 ISBN 입니다.");
@@ -147,6 +223,7 @@ void ReturnedDVDList(void) {
 		ShowCustomerInfo(GetCusPtrByID(save->rentList[i].cusID));
 		puts("");
 	}
+
 	puts("조회를 완료하였습니다.");
 	getchar();
 	return;

@@ -5,7 +5,7 @@ void RegistDVD(void);
 void SearchDVDInfo(void);
 void RentDVD(void);
 void ReturnDVD(void);
-void ReturnedDVDList(void);
+void RentedDVDList(void);
 
 #endif
 /* end of file */

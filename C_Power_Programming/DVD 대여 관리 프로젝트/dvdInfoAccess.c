@@ -65,4 +65,52 @@ int IsRegistISBN(char * ISBN) {
 		return 1;
 }
 
+/* 함수 : int SetDVDRented(char * ISBN, char * cusID, int rentDay) 
+ * 기능 : 대여 상태로 변경 
+ * 반환 : 성공 1, 실패 0
+ */
+
+int SetDVDRented(char * ISBN, char * cusID, int rentDay) {
+	int rentCusNum;
+	dvdInfo * pDVD = GetDVDPtrByISBN(ISBN);
+	if (pDVD == 0)
+		return 0;
+
+	rentCusNum = pDVD->numOfRentCus;
+
+	pDVD->rentState = RENTED;
+	strcpy(pDVD->rentList[rentCusNum].cusID, cusID);
+	pDVD->rentList[rentCusNum].rentDay = rentDay;
+	pDVD->numOfRentCus++;
+	return 1;
+}
+
+/* 함수 : int SetDVDReturned(char * ISBN)
+ * 기능 : 대여 가능 상태로 변경
+ * 반환 : 성공 1, 실패 0
+ */
+
+int SetDVDReturned(char * ISBN) {
+	dvdInfo * pDVD = GetDVDPtrByISBN(ISBN);
+
+	if (pDVD == 0)
+		return 0;
+
+	pDVD->rentState = RETURNED;
+	return 1;
+}
+
+/* 함수 : int GetDVDRentState(char * ISBN)
+ * 기능 : 현재 대여 상태 반환
+ * 반환 : RETURNED, RENTED, 존재하지 않는 ISBN의 경우 -1 반환
+ */
+
+int GetDVDRentState(char * ISBN) {
+	dvdInfo * pDVD = GetDVDPtrByISBN(ISBN);
+	if (pDVD == 0)
+		return -1;
+
+	return pDVD->rentState;
+}
+
 /* end of file */

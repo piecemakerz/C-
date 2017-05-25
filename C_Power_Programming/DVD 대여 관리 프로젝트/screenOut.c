@@ -24,6 +24,7 @@ void ShowMenu(void) {
 	printf("6. DVD 반납 \n");
 	printf("------------------- \n");
 	printf("7. DVD 대여 고객 전체 조회\n");
+	printf("8. 종료 \n");
 	printf("------------------- \n");
 	printf("선택>> ");
 }
