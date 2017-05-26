@@ -1,0 +1,2 @@
+numOfRentCus : 1
+ISBN : 217-5555 cusID : wrys rentDay : 20080505

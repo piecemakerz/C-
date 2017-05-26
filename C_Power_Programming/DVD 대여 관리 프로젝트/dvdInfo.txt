@@ -1,2 +1,2 @@
 numOfDVD : 1
-ISBN : 217-5555, title : Action!!, genre : 1, rentState : 1
+ISBN : 217-5555 title : Action!! genre : 1 rentState : 1

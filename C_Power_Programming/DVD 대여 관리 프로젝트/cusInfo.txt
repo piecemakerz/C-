@@ -1,2 +1,2 @@
 numOfCustomer : 1
-ID : wrys, name : À±Áö¹Î, phoneNum : 010-1122-3344
+ID : wrys name : À±Áö¹Î phoneNum : 010-1122-3344

@@ -19,20 +19,20 @@ void AddRentList(char * ISBN, char * cusID, int rentDay) {
 	if (numOfRentCus >= RENT_LEN)
 		return 0;
 
+	fp = fopen("rentInfo.txt", "wt");
+	if (fp == NULL)
+		return;
+
 	numOfRentCus++;
 
-	if(numOfRentCus==1)
-		fp = fopen("rentInfo.txt", "wt");
-	else
-		fp = fopen("rentInfo.txt", "at");
-	fprintf("numOfRentCus : %d\n", numOfRentCus);
+	fprintf(fp, "numOfRentCus : %d\n", numOfRentCus);
 	fseek(fp, 0, SEEK_END);
 
 	strcpy(rentList[numOfRentCus-1].ISBN, ISBN);
 	strcpy(rentList[numOfRentCus-1].cusID, cusID);
 	rentList[numOfRentCus-1].rentDay = rentDay;
 	
-	fprintf(fp, "ISBN : %s, cusID : %s, rentDay : %d\n", ISBN, cusID, rentDay);
+	fprintf(fp, "ISBN : %s cusID : %s rentDay : %d\n", ISBN, cusID, rentDay);
 	fclose(fp);
 	return;
 }
@@ -77,11 +77,12 @@ void LoadRentList() {
 	if (fp == NULL)
 		return;
 
-	fscanf("numOfRentCus : %d\n", &numOfRentCus);
+	fscanf(fp, "numOfRentCus : %d\n", &numOfRentCus);
+
 	for (int i = 0; i < numOfRentCus; i++) {
-		fscanf(fp, "ISBN : %s, cusID : %s, rentDay : %d\n", ISBN, cusID, &rentDay);
-		if (!feof(fp))
+		if (feof(fp))
 			break;
+		fscanf(fp, "ISBN : %s cusID : %s rentDay : %d\n", ISBN, cusID, &rentDay);
 		strcpy(rentList[i].ISBN, ISBN);
 		strcpy(rentList[i].cusID, cusID);
 		rentList[i].rentDay = rentDay;

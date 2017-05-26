@@ -24,12 +24,12 @@ int AddCusInfo(char * ID, char * name, char * num) {
 	if (numOfCustomer >= MAX_CUSTOMER)
 		return 0;
 
+	fp = fopen("cusInfo.txt", "wt");
+	if (fp == NULL)
+		return 0;
+
 	numOfCustomer++;
 
-	if(numOfCustomer == 1)
-		fp = fopen("cusInfo.txt", "wt");
-	else
-		fp = fopen("cusInfo.txt", "at");
 	fprintf(fp, "numOfCustomer : %d\n", numOfCustomer);
 	fseek(fp, 0, SEEK_END);
 
@@ -40,7 +40,7 @@ int AddCusInfo(char * ID, char * name, char * num) {
 	strcpy(save->phoneNum, num);
 
 	cusList[numOfCustomer-1] = save;
-	fprintf(fp, "ID : %s, name : %s, phoneNum : %s\n", ID, name, num);
+	fprintf(fp, "ID : %s name : %s phoneNum : %s\n", ID, name, num);
 	fclose(fp);
 	return numOfCustomer;
 }
@@ -90,11 +90,12 @@ void LoadCusInfo() {
 		return;
 
 	fscanf(fp, "numOfCustomer : %d\n", &numOfCustomer);
+
 	for(int i=0; i<numOfCustomer; i++){
-		cusInfo * save = (cusInfo *)malloc(sizeof(cusInfo));
-		fscanf(fp, "ID : %s, name : %s, phoneNum : %s\n", ID, name, num);
-		if (!feof(fp))
+		if (feof(fp))
 			break;
+		cusInfo * save = (cusInfo *)malloc(sizeof(cusInfo));
+		fscanf(fp, "ID : %s name : %s phoneNum : %s\n", ID, name, num);
 		strcpy(save->ID, ID);
 		strcpy(save->name, name);
 		strcpy(save->phoneNum, num);
