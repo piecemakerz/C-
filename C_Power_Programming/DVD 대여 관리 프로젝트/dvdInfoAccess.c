@@ -134,17 +134,16 @@ void LoadDVDInfo() {
 	fscanf(fp, "numOfDVD : %d\n", &numOfDVD);
 
 	for (int i = 0; i < numOfDVD; i++) {
-		if (feof(fp))
-			break;
 		dvdInfo * save = (dvdInfo *)malloc(sizeof(dvdInfo));
-		fscanf(fp, "ISBN : %s title : %s genre : %d rentState : %d\n", ISBN, title, &genre, &rentState);
+		if (fscanf(fp, "ISBN : %s title : %s genre : %d rentState : %d\n", ISBN, title, &genre, &rentState) == EOF)
+			break;
 		strcpy(save->ISBN, ISBN);
 		strcpy(save->title, title);
 		save->genre = genre;
 		save->rentState = rentState;
 		dvdList[i] = save;
 	}
-	
+
 	fclose(fp);
 	return numOfDVD;
 }
@@ -164,9 +163,8 @@ void ChangeDVDInfo(dvdInfo * pDVD) {
 	pos = ftell(fp);
 
 	for (int i = 0; i < numOfDVD; i++) {
-		if (feof(fp))
+		if(fscanf(fp, "ISBN : %s title : %s genre : %d rentState : %d\n", ISBN, title, &genre, &rentState) == EOF)
 			break;
-		fscanf(fp, "ISBN : %s title : %s genre : %d rentState : %d\n", ISBN, title, &genre, &rentState);
 
 		if (!strcmp(pDVD->ISBN, ISBN)) {
 			fclose(fp);

@@ -85,17 +85,16 @@ void LoadCusInfo() {
 	char ID[ID_LEN];
 	char name[NAME_LEN];
 	char num[PHONE_LEN];
-
 	if (fp == NULL)
 		return;
 
 	fscanf(fp, "numOfCustomer : %d\n", &numOfCustomer);
 
 	for(int i=0; i<numOfCustomer; i++){
-		if (feof(fp))
-			break;
 		cusInfo * save = (cusInfo *)malloc(sizeof(cusInfo));
-		fscanf(fp, "ID : %s name : %s phoneNum : %s\n", ID, name, num);
+		if(fscanf(fp, "ID : %s name : %s phoneNum : %s\n", ID, name, num) == EOF)
+			break;
+
 		strcpy(save->ID, ID);
 		strcpy(save->name, name);
 		strcpy(save->phoneNum, num);

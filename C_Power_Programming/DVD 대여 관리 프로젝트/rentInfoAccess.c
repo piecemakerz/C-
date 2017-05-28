@@ -72,7 +72,6 @@ void LoadRentList() {
 	char ISBN[ISBN_LEN];
 	char cusID[ID_LEN];
 	int rentDay;
-
 	FILE * fp = fopen("rentInfo.txt", "rt");
 	if (fp == NULL)
 		return;
@@ -80,13 +79,13 @@ void LoadRentList() {
 	fscanf(fp, "numOfRentCus : %d\n", &numOfRentCus);
 
 	for (int i = 0; i < numOfRentCus; i++) {
-		if (feof(fp))
+		if (fscanf(fp, "ISBN : %s cusID : %s rentDay : %d\n", ISBN, cusID, &rentDay) == EOF)
 			break;
-		fscanf(fp, "ISBN : %s cusID : %s rentDay : %d\n", ISBN, cusID, &rentDay);
 		strcpy(rentList[i].ISBN, ISBN);
 		strcpy(rentList[i].cusID, cusID);
 		rentList[i].rentDay = rentDay;
 	}
+
 	fclose(fp);
 	return;
 }
