@@ -15,7 +15,9 @@ int main(void) {
 
 	while (1) {
 		BlockDown();
-		Sleep(SYS_DELAY);
+		for (int i = 0; i < 15000; i++)
+				CheckArrowInput();
+		//Sleep(SYS_DELAY);
 	}
 	return 0;
 }

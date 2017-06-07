@@ -1,8 +1,10 @@
+/* 블록, 게임화면 컨트롤 함수들의 정의*/
 #include <time.h>
 #include "common.h"
 #include "point.h"
 #include "blockInfo.h"
 #include "keyCurControl.h"
+#include "blockStageControl.h"
 
 static int currentBlockModel;
 static int curPosX, curPosY;
@@ -60,4 +62,32 @@ void BlockDown(void) {
 
 	SetCurrentCursorPos(curPosX, curPosY);
 	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+}
+
+void ArrowMove(void) {
+	int arrow = _getch();
+
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+
+	switch (arrow) {
+
+	case LEFT_ARROW:
+		curPosX -= 2;
+		SetCurrentCursorPos(curPosX, curPosY);
+		break;
+	case RIGHT_ARROW:
+		curPosX += 2;
+		SetCurrentCursorPos(curPosX, curPosY);
+		break;
+	case UPPER_ARROW:
+		if (GetCurrentBlockIdx() % 4 == 3)
+			currentBlockModel -= 3;
+		else
+			currentBlockModel += 1;
+		break;
+	}
+
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+
+	return;
 }
