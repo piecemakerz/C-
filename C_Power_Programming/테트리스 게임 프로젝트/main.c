@@ -7,6 +7,8 @@
 #define SYS_DELAY 100
 
 int main(void) {
+	InitKeyDelayRate(10);
+
 	RemoveCursor();
 
 	InitNewBlockPos(START_CURPOS_X, START_CURPOS_Y);
@@ -15,9 +17,17 @@ int main(void) {
 
 	while (1) {
 		BlockDown();
+
+		ProcessKeyInput();
+	}
+
+	/*while (1) {
+		BlockDown();
 		for (int i = 0; i < 15000; i++)
 				CheckArrowInput();
 		//Sleep(SYS_DELAY);
 	}
+	*/
+
 	return 0;
-}
+} 

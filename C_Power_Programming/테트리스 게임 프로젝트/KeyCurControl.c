@@ -4,7 +4,17 @@
 #include <windows.h>
 #include "point.h"
 #include "blockStageControl.h"
-#include "keyCurControl.h"
+//#include "keyCurControl.h"
+
+#define KEY_SENSITIVE 100
+#define SYS_DELAY 20
+
+#define LEFT 75
+#define RIGHT 77
+#define UP 72
+#define DOWN 80
+
+static int keyDelayRate;
 
 void RemoveCursor(void) {
 	CONSOLE_CURSOR_INFO curInfo;
@@ -29,9 +39,40 @@ void SetCurrentCursorPos(int x, int y) {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-void CheckArrowInput(void) {
+/*void CheckArrowInput(void) {
 	if (_kbhit() && _getch() == ARROW_CHECK)
 		ArrowMove();
 
 	return;
+}
+*/
+
+void ProcessKeyInput(void) {
+	int i;
+	int key;
+
+	for (i = 0; i < KEY_SENSITIVE; i++) {
+		if (_kbhit() != 0) {
+			key = _getch();
+
+			switch (key) {
+			case LEFT:
+				ShiftLeft();
+				break;
+			case RIGHT:
+				ShiftRight();
+				break;
+			case UP :
+				RotateBlock();
+			}
+		}
+		if (i % keyDelayRate == 0)
+			Sleep(SYS_DELAY);
+	}
+}
+
+void InitKeyDelayRate(int rate) {
+	if (rate < 1)
+		return;
+	keyDelayRate = rate;
 }

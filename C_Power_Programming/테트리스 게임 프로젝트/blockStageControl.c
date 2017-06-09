@@ -4,10 +4,11 @@
 #include "point.h"
 #include "blockInfo.h"
 #include "keyCurControl.h"
-#include "blockStageControl.h"
+//#include "blockStageControl.h"
 
 static int currentBlockModel;
 static int curPosX, curPosY;
+static int rotateSte;
 
 void InitNewBlockPos(int x, int y) {
 	if (x < 0 || y < 0)
@@ -25,7 +26,7 @@ void ChooseBlock(void) {
 }
 
 int GetCurrentBlockIdx(void) {
-	return currentBlockModel;
+	return currentBlockModel + rotateSte;
 }
 
 void ShowBlock(char blockInfo[][4]) {
@@ -64,7 +65,7 @@ void BlockDown(void) {
 	ShowBlock(blockModel[GetCurrentBlockIdx()]);
 }
 
-void ArrowMove(void) {
+/*void ArrowMove(void) {
 	int arrow = _getch();
 
 	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
@@ -90,4 +91,34 @@ void ArrowMove(void) {
 	ShowBlock(blockModel[GetCurrentBlockIdx()]);
 
 	return;
+}
+*/
+
+void ShiftLeft(void) {
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+	curPosX -= 2;
+
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+}
+
+void ShiftRight(void) {
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+	curPosX += 2;
+
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+}
+
+void RotateBlock(void) {
+	int nextRotSte;
+
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+
+	nextRotSte = rotateSte + 1;
+	nextRotSte %= 4;
+	rotateSte = nextRotSte;
+
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
 }
