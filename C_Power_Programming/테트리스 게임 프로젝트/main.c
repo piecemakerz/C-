@@ -11,23 +11,24 @@ int main(void) {
 
 	RemoveCursor();
 
-	while(1) {
-		
-		InitGameBoard();
+	DrawGameBoard();
 
-		DrawGameBoard();
+	while(1) {
 
 		InitNewBlockPos(START_CURPOS_X, START_CURPOS_Y);
 
 		ChooseBlock();
 
+		if (IsGameOver())
+			break;
+
 		while (1) {
-
-			if (BlockDown())
+			if (BlockDown() == 0) {
+				AddCurrentBlockInfoToBoard();
 				break;
-
+			}
+			
 			ProcessKeyInput();
-
 		}
 	}
 	/*while (1) {
@@ -38,5 +39,7 @@ int main(void) {
 	}
 	*/
 
+	SetCurrentCursorPos(10, 10);
+	puts("Game Over ^^");
 	return 0;
 } 
