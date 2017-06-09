@@ -3,7 +3,7 @@
 #include "blockStageControl.h"
 
 #define START_CURPOS_X (5*2)
-#define START_CURPOS_Y (0)
+#define START_CURPOS_Y (2)
 #define SYS_DELAY 100
 
 int main(void) {
@@ -11,16 +11,25 @@ int main(void) {
 
 	RemoveCursor();
 
-	InitNewBlockPos(START_CURPOS_X, START_CURPOS_Y);
+	while(1) {
+		
+		InitGameBoard();
 
-	ChooseBlock();
+		DrawGameBoard();
 
-	while (1) {
-		BlockDown();
+		InitNewBlockPos(START_CURPOS_X, START_CURPOS_Y);
 
-		ProcessKeyInput();
+		ChooseBlock();
+
+		while (1) {
+
+			if (BlockDown())
+				break;
+
+			ProcessKeyInput();
+
+		}
 	}
-
 	/*while (1) {
 		BlockDown();
 		for (int i = 0; i < 15000; i++)
