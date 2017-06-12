@@ -20,10 +20,15 @@ void RotateBlock(void);
 void DrawGameBoard(void);
 void AddCurrentBlockInfoToBoard(void);
 int IsGameOver(void);
-
+int CheckLineClear(void);
+void RedrawBlocks(void);
+void ShowInfo(void);
+void CheckLevelUp(void);
 //void BlockPosSaved(char blockInfo[][4]);
 //void DrawCurrentState(void);
 //int LeftCrashCheck(char blockInfo[][4]);
 //int RightCrashCheck(char blockInfo[][4]);
 //int DownCrashCheck(char blockInfo[][4]);
+void printAllGameboardInfo(void);
+void SetSpaceSte(int i);
 #endif

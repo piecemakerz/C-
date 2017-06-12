@@ -13,6 +13,9 @@ int main(void) {
 
 	DrawGameBoard();
 
+	ShowInfo();
+
+	//printAllGameboardInfo();
 	while(1) {
 
 		InitNewBlockPos(START_CURPOS_X, START_CURPOS_Y);
@@ -25,6 +28,14 @@ int main(void) {
 		while (1) {
 			if (BlockDown() == 0) {
 				AddCurrentBlockInfoToBoard();
+				//printAllGameboardInfo();
+
+				if (CheckLineClear()) {
+					RedrawBlocks();
+					ShowInfo();
+					CheckLevelUp();
+				}
+				//printAllGameboardInfo();
 				break;
 			}
 			

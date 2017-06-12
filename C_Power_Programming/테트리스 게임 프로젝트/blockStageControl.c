@@ -5,7 +5,7 @@
 #include "blockInfo.h"
 #include "keyCurControl.h"
 #include "blockStageControl.h"
-
+#include <windows.h>
 #define GBOARD_WIDTH (10)
 #define GBOARD_HEIGHT (20)
 
@@ -17,6 +17,9 @@ static int curPosX, curPosY;
 static int rotateSte;
 //static int savedBlocks[GBOARD_HEIGHT+1][GBOARD_WIDTH+2] = { 0, };
 static int gameBoardInfo[GBOARD_HEIGHT + 1][GBOARD_WIDTH + 2] = { 0, };
+static int gamepoint = 0;
+static int level = 1;
+static int spaceSte = 0;
 
 void InitNewBlockPos(int x, int y) {
 	if (x < 0 || y < 0)
@@ -26,6 +29,21 @@ void InitNewBlockPos(int x, int y) {
 	curPosY = y;
 
 	SetCurrentCursorPos(x, y);
+}
+
+void printAllGameboardInfo(void) {
+	point save = GetCurrentCursorPos();
+	SetCurrentCursorPos(GBOARD_ORIGIN_X, GBOARD_ORIGIN_Y);
+
+	for (int i = 0; i < GBOARD_HEIGHT + 1; i++) {
+		for (int j = 0; j < GBOARD_WIDTH + 2; j++) {
+			printf("%d", gameBoardInfo[i][j]);
+			SetCurrentCursorPos(GBOARD_ORIGIN_X + ((j+1)*2), GBOARD_ORIGIN_Y + i);
+			Sleep(1);
+		}
+		SetCurrentCursorPos(GBOARD_ORIGIN_X, GBOARD_ORIGIN_Y + (i+1));
+	}
+	SetCurrentCursorPos(save.x, save.y);
 }
 
 /* void InitGameBoard(void) {
@@ -98,16 +116,30 @@ int BlockDown(void) {
 		return 1;
 	}
 	*/
-	if (!DetectCollision(curPosX, curPosY + 1, blockModel[GetCurrentBlockIdx()]))
+	if (!spaceSte) {
+		if (!DetectCollision(curPosX, curPosY + 1, blockModel[GetCurrentBlockIdx()]))
+			return 0;
+
+		DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+		curPosY += 1;
+
+		SetCurrentCursorPos(curPosX, curPosY);
+		ShowBlock(blockModel[GetCurrentBlockIdx()]);
+
+		return 1;
+	}
+
+	else {
+		spaceSte = 0;
+		while (DetectCollision(curPosX, curPosY+1, blockModel[GetCurrentBlockIdx()])) {
+			curPosY += 1;
+		}
+		DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+		SetCurrentCursorPos(curPosX, curPosY);
+		ShowBlock(blockModel[GetCurrentBlockIdx()]);
 		return 0;
 
-	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
-	curPosY += 1;
-
-	SetCurrentCursorPos(curPosX, curPosY);
-	ShowBlock(blockModel[GetCurrentBlockIdx()]);
-
-	return 1;
+	}
 }
 
 /*void ArrowMove(void) {
@@ -169,18 +201,24 @@ void ShiftRight(void) {
 
 void RotateBlock(void) {
 	int nextRotSte;
+	int lastRotSte;
 
+	lastRotSte = rotateSte;
 	nextRotSte = rotateSte + 1;
 	nextRotSte %= 4;
 
 	/*if (LeftCrashCheck(blockModel[nextRotSte]) || RightCrashCheck(blockModel[nextRotSte]) || DownCrashCheck(blockModel[nextRotSte]))
 		return;
 	*/
-	if (!DetectCollision(curPosX, curPosY, blockModel[GetCurrentBlockIdx()]))
-		return;
-
 	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+
 	rotateSte = nextRotSte;
+
+	if (!DetectCollision(curPosX, curPosY, blockModel[GetCurrentBlockIdx()])) {
+		rotateSte = lastRotSte;
+		ShowBlock(blockModel[GetCurrentBlockIdx()]);
+		return;
+	}
 
 	SetCurrentCursorPos(curPosX, curPosY);
 	ShowBlock(blockModel[GetCurrentBlockIdx()]);
@@ -250,6 +288,81 @@ int IsGameOver(void) {
 		return 0;
 }
 
+void RedrawBlocks(void) {
+	point save = GetCurrentCursorPos();
+	curPosX = GBOARD_ORIGIN_X + 2;
+	curPosY = GBOARD_ORIGIN_Y;
+	SetCurrentCursorPos(curPosX, curPosY);
+
+	for (int y = 0; y < GBOARD_HEIGHT - 1; y++) {
+		for (int x = 1; x < GBOARD_WIDTH + 1; x++) {
+			if (gameBoardInfo[y][x] == 1)
+				printf("■");
+			else
+				printf("  ");
+
+			curPosX += 2;
+			SetCurrentCursorPos(curPosX, curPosY);
+		}
+		curPosX = GBOARD_ORIGIN_X + 2;
+		curPosY += 1;
+		SetCurrentCursorPos(curPosX, curPosY);
+	}
+	curPosX = save.x;
+	curPosY = save.y;
+	SetCurrentCursorPos(curPosX, curPosY);
+}
+
+int CheckLineClear(void) {
+	int i, j, k;
+	int check = 1;
+	int cleared = 0;
+
+	for (i = 0; i < GBOARD_HEIGHT; i++) {
+		for (j = 1; j < GBOARD_WIDTH + 1; j++) {
+			if (gameBoardInfo[i][j] == 0) {
+				check = 0;
+				break;
+			}
+		}
+
+		if (check) {
+			cleared = 1;
+			for (j = 1; j < GBOARD_WIDTH + 1; j++)
+				gameBoardInfo[i][j] = 0;
+
+			for (j = i; j >=0; j--) {
+				for (k = 1; k < GBOARD_WIDTH + 1; k++) {
+					gameBoardInfo[j][k] = gameBoardInfo[j-1][k];
+				}
+			}
+			gamepoint += 10;
+		}
+		check = 1;
+	}
+
+	return cleared;
+}
+
+void ShowInfo(void) {
+	point save = GetCurrentCursorPos();
+	SetCurrentCursorPos(40, 10);
+	printf("현재 레벨: %d", level);
+	SetCurrentCursorPos(40, 12);
+	printf("현재 점수 : %d", gamepoint);
+	SetCurrentCursorPos(save.x, save.y);
+}
+
+void CheckLevelUp(void) {
+	if ((gamepoint / 20) >= (level - 1)) {
+		level++;
+		IncreDelayRate();
+	}
+}
+
+void SetSpaceSte(int i) {
+	spaceSte = i;
+}
 /*void BlockPosSaved(char blockInfo[][4]) {
 	int y, x;
 	point curPos = GetCurrentCursorPos();

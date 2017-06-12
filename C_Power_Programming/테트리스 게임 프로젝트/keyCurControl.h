@@ -11,5 +11,6 @@ void SetCurrentCursorPos(int x, int y);
 //void CheckArrowInput(void);
 void ProcessKeyInput(void);
 void InitKeyDelayRate(int rate);
-
+void IncreDelayRate(void);
+void SpaceInput(void);
 #endif

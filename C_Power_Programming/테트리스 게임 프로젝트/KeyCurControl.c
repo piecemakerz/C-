@@ -4,6 +4,7 @@
 #include <windows.h>
 #include "point.h"
 #include "blockStageControl.h"
+#include "keyCurControl.h"
 //#include "keyCurControl.h"
 
 #define KEY_SENSITIVE 100
@@ -13,6 +14,7 @@
 #define RIGHT 77
 #define UP 72
 #define DOWN 80
+#define SPACEBAR 32
 
 static int keyDelayRate;
 
@@ -64,6 +66,10 @@ void ProcessKeyInput(void) {
 				break;
 			case UP :
 				RotateBlock();
+				break;
+			case SPACEBAR:
+				SpaceInput();
+				break;
 			}
 		}
 		if (i % keyDelayRate == 0)
@@ -75,4 +81,13 @@ void InitKeyDelayRate(int rate) {
 	if (rate < 1)
 		return;
 	keyDelayRate = rate;
+}
+
+void IncreDelayRate(void) {
+	keyDelayRate += 1;
+}
+
+void SpaceInput(void) {
+	SetSpaceSte(1);
+	BlockDown();
 }
