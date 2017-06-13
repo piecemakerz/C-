@@ -294,7 +294,7 @@ void RedrawBlocks(void) {
 	curPosY = GBOARD_ORIGIN_Y;
 	SetCurrentCursorPos(curPosX, curPosY);
 
-	for (int y = 0; y < GBOARD_HEIGHT - 1; y++) {
+	for (int y = 0; y < GBOARD_HEIGHT; y++) {
 		for (int x = 1; x < GBOARD_WIDTH + 1; x++) {
 			if (gameBoardInfo[y][x] == 1)
 				printf("бс");
