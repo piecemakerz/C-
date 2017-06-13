@@ -1,10 +1,12 @@
 #include <Windows.h>
+#include "common.h"
 #include "keyCurControl.h"
 #include "blockStageControl.h"
+#include "scoreLevelControl.h"
 
 #define START_CURPOS_X (5*2)
 #define START_CURPOS_Y (2)
-#define SYS_DELAY 100
+//#define SYS_DELAY 100
 
 int main(void) {
 	InitKeyDelayRate(10);
@@ -13,7 +15,7 @@ int main(void) {
 
 	DrawGameBoard();
 
-	ShowInfo();
+	ShowCurrentScoreAndLevel();
 
 	//printAllGameboardInfo();
 	while(1) {
@@ -26,20 +28,20 @@ int main(void) {
 			break;
 
 		while (1) {
-			if (BlockDown() == 0) {
-				AddCurrentBlockInfoToBoard();
+			if (BlockDown() == 0)
+				//AddCurrentBlockInfoToBoard();
 				//printAllGameboardInfo();
+				break;
 
-				if (CheckLineClear()) {
+				/*if (CheckLineClear()) {
 					RedrawBlocks();
 					ShowInfo();
 					CheckLevelUp();
 				}
+				*/
 				//printAllGameboardInfo();
-				break;
-			}
-			
-			ProcessKeyInput();
+				if(ProcessKeyInput())
+					break;
 		}
 	}
 	/*while (1) {

@@ -5,7 +5,9 @@
 #include "blockInfo.h"
 #include "keyCurControl.h"
 #include "blockStageControl.h"
-#include <windows.h>
+#include "scoreLevelControl.h"
+//#include <windows.h>
+
 #define GBOARD_WIDTH (10)
 #define GBOARD_HEIGHT (20)
 
@@ -17,9 +19,10 @@ static int curPosX, curPosY;
 static int rotateSte;
 //static int savedBlocks[GBOARD_HEIGHT+1][GBOARD_WIDTH+2] = { 0, };
 static int gameBoardInfo[GBOARD_HEIGHT + 1][GBOARD_WIDTH + 2] = { 0, };
-static int gamepoint = 0;
+/*static int gamepoint = 0;
 static int level = 1;
 static int spaceSte = 0;
+*/
 
 void InitNewBlockPos(int x, int y) {
 	if (x < 0 || y < 0)
@@ -31,7 +34,7 @@ void InitNewBlockPos(int x, int y) {
 	SetCurrentCursorPos(x, y);
 }
 
-void printAllGameboardInfo(void) {
+/*void printAllGameboardInfo(void) {
 	point save = GetCurrentCursorPos();
 	SetCurrentCursorPos(GBOARD_ORIGIN_X, GBOARD_ORIGIN_Y);
 
@@ -45,6 +48,7 @@ void printAllGameboardInfo(void) {
 	}
 	SetCurrentCursorPos(save.x, save.y);
 }
+*/
 
 /* void InitGameBoard(void) {
 	for (int i = 0; i < GBOARD_HEIGHT + 1; i++) {
@@ -109,14 +113,67 @@ int DetectCollision(int posX, int posY, char blockModel[][4]) {
 	return 1;
 }
 
+void DrawSolidBlocks(void) {
+	int x, y;
+	int cursX, cursY;
+
+	for (y = 0; y < GBOARD_HEIGHT; y++) {
+		for (x = 1; x < GBOARD_WIDTH + 1; x++) {
+			cursX = x * 2 + GBOARD_ORIGIN_X;
+			cursY = y + GBOARD_ORIGIN_Y;
+			SetCurrentCursorPos(cursX, cursY);
+
+			if (gameBoardInfo[y][x] == 1)
+				printf("бс");
+			else
+				printf("  ");
+		}
+	}
+}
+
+void RemoveFillUpLine(void) {
+	int x, y;
+	int line;
+
+	for (y = GBOARD_HEIGHT - 1; y > 0; y--) {
+		for (x = 1; x < GBOARD_WIDTH + 1; x++) {
+			if (gameBoardInfo[y][x] != 1)
+				break;
+		}
+
+		if (x == (GBOARD_WIDTH + 1)) {
+			for (line = 0; y - line > 0; line++) {
+				memcpy(&gameBoardInfo[y - line][1], &gameBoardInfo[(y - line) - 1][1], GBOARD_WIDTH * sizeof(int));
+			}
+
+			y++;
+			AddGameScore(10);
+			ShowCurrentScoreAndLevel();
+		}
+	}
+	DrawSolidBlocks();
+}
+
 int BlockDown(void) {
 	/*if (DownCrashCheck(blockModel[GetCurrentBlockIdx()])) {
 		BlockPosSaved(blockModel[GetCurrentBlockIdx()]);
 		DrawCurrentState();
 		return 1;
+	}*/
+
+	if ((!DetectCollision(curPosX, curPosY + 1, blockModel[GetCurrentBlockIdx()]))) {
+		AddCurrentBlockInfoToBoard();
+		RemoveFillUpLine();
+		return 0;
 	}
-	*/
-	if (!spaceSte) {
+
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+	curPosY += 1;
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+	return 1;
+
+	/*if (!spaceSte) {
 		if (!DetectCollision(curPosX, curPosY + 1, blockModel[GetCurrentBlockIdx()]))
 			return 0;
 
@@ -140,6 +197,7 @@ int BlockDown(void) {
 		return 0;
 
 	}
+	*/
 }
 
 /*void ArrowMove(void) {
@@ -224,6 +282,10 @@ void RotateBlock(void) {
 	ShowBlock(blockModel[GetCurrentBlockIdx()]);
 }
 
+void SolidCurrentBlock(void) {
+	while (BlockDown());
+}
+
 void DrawGameBoard(void) {
 	int x, y;
 
@@ -288,7 +350,7 @@ int IsGameOver(void) {
 		return 0;
 }
 
-void RedrawBlocks(void) {
+/*void RedrawBlocks(void) {
 	point save = GetCurrentCursorPos();
 	curPosX = GBOARD_ORIGIN_X + 2;
 	curPosY = GBOARD_ORIGIN_Y;

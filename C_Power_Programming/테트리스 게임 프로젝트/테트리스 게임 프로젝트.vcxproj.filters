@@ -30,6 +30,9 @@
     <ClInclude Include="blockStageControl.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="scoreLevelControl.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -39,6 +42,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="blockStageControl.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="scoreLevelControl.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

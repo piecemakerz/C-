@@ -49,7 +49,7 @@ void SetCurrentCursorPos(int x, int y) {
 }
 */
 
-void ProcessKeyInput(void) {
+int ProcessKeyInput(void) {
 	int i;
 	int key;
 
@@ -68,22 +68,29 @@ void ProcessKeyInput(void) {
 				RotateBlock();
 				break;
 			case SPACEBAR:
-				SpaceInput();
-				break;
+				//SpaceInput();
+				SolidCurrentBlock();
+				return 1;
 			}
 		}
 		if (i % keyDelayRate == 0)
 			Sleep(SYS_DELAY);
 	}
+	return 0;
 }
 
 void InitKeyDelayRate(int rate) {
 	if (rate < 1)
 		return;
 	keyDelayRate = rate;
+
 }
 
-void IncreDelayRate(void) {
+void KeyDelaySpeedCtl(int addSpeed) {
+	keyDelayRate += addSpeed;
+}
+
+/*void IncreDelayRate(void) {
 	keyDelayRate += 1;
 }
 
@@ -91,3 +98,4 @@ void SpaceInput(void) {
 	SetSpaceSte(1);
 	BlockDown();
 }
+*/
